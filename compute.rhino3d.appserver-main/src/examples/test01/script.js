@@ -8,7 +8,7 @@ import rhino3dm from 'rhino3dm'
 const loader = new Rhino3dmLoader()
 loader.setLibraryPath( 'https://unpkg.com/rhino3dm@8.0.0-beta/' )
 
-const definition = 'test02.gh'
+const definition = 'test01.gh'
 
 // setup input change events
 const HW_Slider = document.getElementById( 'HullWidth' )
