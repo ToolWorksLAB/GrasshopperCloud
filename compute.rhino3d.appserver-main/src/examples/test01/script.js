@@ -139,7 +139,7 @@ var scene, camera, renderer, controls
 function init () {
 
   // Rhino models are z-up, so set this as the default
-  THREE.Object3D.DefaultUp = new THREE.Vector3( 0, 0, 1 );
+  THREE.Object3D.DefaultUp = new THREE.Vector3( 0, 1, 0 );
 
   scene = new THREE.Scene()
   scene.background = new THREE.Color(1,1,1)
