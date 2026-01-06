@@ -149,6 +149,15 @@ function init () {
 
   camera.position.z = 50
 
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
+  scene.add(ambientLight)
+  const keyLight = new THREE.DirectionalLight(0xffffff, 0.8)
+  keyLight.position.set(20, 40, 30)
+  scene.add(keyLight)
+  const fillLight = new THREE.DirectionalLight(0xffffff, 0.35)
+  fillLight.position.set(-30, 10, -20)
+  scene.add(fillLight)
+
   window.addEventListener( 'resize', onWindowResize, false )
 
   animate()
@@ -220,8 +229,21 @@ function replaceCurrentMesh (threeMesh) {
       // debug
       object.traverse(child => {
         console.log(child)
-        if (child.material)
-          child.material = new THREE.MeshBasicMaterial( { color: 0x999999 } )
+        if (child.isMesh) {
+          if (child.geometry && !child.geometry.attributes.normal) {
+            child.geometry.computeVertexNormals()
+          }
+          const material = new THREE.MeshStandardMaterial({
+            color: 0x999999,
+            roughness: 0.45,
+            metalness: 0.05,
+            side: THREE.DoubleSide
+          })
+          if (child.material && child.material.color) {
+            material.color.copy(child.material.color)
+          }
+          child.material = material
+        }
       }, false)
 
       // clear objects from scene. do this here to avoid blink
