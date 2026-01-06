@@ -221,7 +221,7 @@ function replaceCurrentMesh (threeMesh) {
       object.traverse(child => {
         console.log(child)
         if (child.material)
-          child.material = new THREE.MeshBasicMaterial( { vertexColors: true })
+          child.material = new THREE.MeshBasicMaterial( { color: 0x999999 } )
       }, false)
 
       // clear objects from scene. do this here to avoid blink
