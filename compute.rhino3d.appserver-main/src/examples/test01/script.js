@@ -42,7 +42,7 @@ async function compute(){
   const data = {
     definition: definition,
     inputs: {
-      'HullWidth':document.getElementById('Hullwidth').valueAsNumber,
+      'HullWidth':document.getElementById('HullWidth').valueAsNumber,
       'Wingspan':document.getElementById('Wingspan').valueAsNumber,
       'Wingstart':document.getElementById('Wingstart').valueAsNumber,
       'Wingend':document.getElementById('Wingend').valueAsNumber,
