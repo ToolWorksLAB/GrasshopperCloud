@@ -233,10 +233,12 @@ function replaceCurrentMesh (threeMesh) {
           if (child.geometry && !child.geometry.attributes.normal) {
             child.geometry.computeVertexNormals()
           }
-          const material = new THREE.MeshStandardMaterial({
+          const material = new THREE.MeshPhysicalMaterial({
             color: 0x999999,
             roughness: 0.45,
             metalness: 0.05,
+            clearcoat: 0.1,
+            clearcoatRoughness: 0.2,
             side: THREE.DoubleSide
           })
           if (child.material && child.material.color) {
