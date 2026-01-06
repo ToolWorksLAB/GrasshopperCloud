@@ -70,11 +70,7 @@ async function compute(){
 
     // process mesh
     console.log(responseJson.values)
-
-    const rhinoObject = decodeItem(responseJson.values[0].InnerTree['{0}'][0])
-    console.log(rhinoObject)
-    let threeMesh = meshToThreejs(rhinoObject, new THREE.MeshBasicMaterial({vertexColors:true}))
-    replaceCurrentMesh(threeMesh)
+    collectResults(responseJson)
     
 
     // let cluster_data = responseJson.values[1].InnerTree['{0;0}'].map(d=>d.data)
@@ -116,7 +112,6 @@ async function compute(){
     //   legend.appendChild(div)
     // }
 
-    document.getElementById('loader').style.display = 'none'
   } catch(error){
     console.error(error)
   }
@@ -182,12 +177,6 @@ function replaceCurrentMesh (threeMesh) {
 
 }
 
-function meshToThreejs (mesh, material) {
-  let loader = new THREE.BufferGeometryLoader()
-  var geometry = loader.parse(mesh.toThreejsJSON())
-  return new THREE.Mesh(geometry, material)
-}
-
 /**
  * Parse response
  */
@@ -228,13 +217,12 @@ function meshToThreejs (mesh, material) {
   const buffer = new Uint8Array(doc.toByteArray()).buffer
   loader.parse( buffer, function ( object ) 
   {
-      // debug 
-      /*
+      // debug
       object.traverse(child => {
-        if (child.material !== undefined)
-          child.material = new THREE.MeshNormalMaterial()
+        console.log(child)
+        if (child.material)
+          child.material = new THREE.MeshBasicMaterial( { vertexColors: true })
       }, false)
-      */
 
       // clear objects from scene. do this here to avoid blink
       scene.traverse(child => {
@@ -246,12 +234,8 @@ function meshToThreejs (mesh, material) {
       // add object graph from rhino model to three.js scene
       scene.add( object )
 
-      // hide spinner and enable download button
+      // hide spinner
       showSpinner(false)
-      downloadButton.disabled = false
-
-      // zoom to extents
-      zoomCameraToSelection(camera, controls, scene.children)
   }, (error) => {
     console.error(error)
   })
